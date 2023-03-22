@@ -22,4 +22,7 @@ public class AlbumService {
     public Optional<Album> findById(long id) {
         return albumRepository.findById(id);
     }
+    public List<Album> findByJaar(int jaar) {
+        return albumRepository.findByJaarOrderByNaamAsc(jaar);
+    }
 }

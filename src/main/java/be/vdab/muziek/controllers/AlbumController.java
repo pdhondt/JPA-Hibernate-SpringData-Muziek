@@ -31,4 +31,10 @@ class AlbumController {
                 .map(AlbumMetTracksEnTotaleTijd::new)
                 .orElseThrow(AlbumNietGevondenException::new);
     }
+    @GetMapping(params = "jaar")
+    Stream<AlbumBeknoptMetArtiest> findByJaar(int jaar) {
+        return albumService.findByJaar(jaar)
+                .stream()
+                .map(AlbumBeknoptMetArtiest::new);
+    }
 }
