@@ -3,6 +3,7 @@ package be.vdab.muziek.services;
 import be.vdab.muziek.domain.Album;
 import be.vdab.muziek.exceptions.AlbumNietGevondenException;
 import be.vdab.muziek.repositories.AlbumRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +18,8 @@ public class AlbumService {
     public AlbumService(AlbumRepository albumRepository) {
         this.albumRepository = albumRepository;
     }
-    public List<Album> findAllMetArtiest() {
-        return albumRepository.findAllMetArtiest();
+    public List<Album> findAll() {
+        return albumRepository.findAll(Sort.by("naam"));
     }
     public Optional<Album> findById(long id) {
         return albumRepository.findById(id);
@@ -26,7 +27,7 @@ public class AlbumService {
     public List<Album> findByJaar(int jaar) {
         return albumRepository.findByJaarOrderByNaamAsc(jaar);
     }
-    @Transactional
+    @Transactional(readOnly = false)
     public void wijzigScore(long id, int score) {
         albumRepository.findAndLockById(id)
                 .orElseThrow(AlbumNietGevondenException::new)

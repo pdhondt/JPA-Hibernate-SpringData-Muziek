@@ -19,8 +19,8 @@ class AlbumController {
         this.albumService = albumService;
     }
     @GetMapping
-    Stream<AlbumBeknoptMetArtiest> findAllMetArtiest() {
-        return albumService.findAllMetArtiest()
+    Stream<AlbumBeknoptMetArtiest> findAll() {
+        return albumService.findAll()
                 .stream()
                 .map(AlbumBeknoptMetArtiest::new);
     }

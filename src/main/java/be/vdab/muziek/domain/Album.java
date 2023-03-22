@@ -1,10 +1,10 @@
 package be.vdab.muziek.domain;
 
-import be.vdab.muziek.exceptions.OngeldigeScoreException;
 import jakarta.persistence.*;
 
 import java.time.LocalTime;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,8 +20,7 @@ public class Album {
     @ElementCollection
     @CollectionTable(name = "tracks",
         joinColumns = @JoinColumn(name = "albumId"))
-    @OrderBy("naam")
-    private Set<Track> tracks;
+    private Set<Track> tracks = new LinkedHashSet<>();
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "artiestId")
     private Artiest artiest;
@@ -73,7 +72,8 @@ public class Album {
         return Objects.hash(barcode);
     }
     public LocalTime totaleTijd() {
-        var som = LocalTime.of(0, 0, 0);
+//        var som = LocalTime.of(0, 0, 0);
+        var som = LocalTime.MIN;
         for (var track : this.getTracks()) {
             var trackTijd = track.getTijd();
             som = som.plusHours(trackTijd.getHour()).plusMinutes(trackTijd.getMinute())
@@ -82,9 +82,6 @@ public class Album {
         return som;
     }
     public void setScore(int score) {
-        if (!(score >= 0 && score <= 10)) {
-            throw new OngeldigeScoreException();
-        }
         this.score = score;
     }
 }
