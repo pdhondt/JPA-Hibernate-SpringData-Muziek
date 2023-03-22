@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -17,5 +18,8 @@ public class AlbumService {
     }
     public List<Album> findAllMetArtiest() {
         return albumRepository.findAllMetArtiest();
+    }
+    public Optional<Album> findById(long id) {
+        return albumRepository.findById(id);
     }
 }

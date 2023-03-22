@@ -2,6 +2,7 @@ package be.vdab.muziek.domain;
 
 import jakarta.persistence.*;
 
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
@@ -69,5 +70,14 @@ public class Album {
     @Override
     public int hashCode() {
         return Objects.hash(barcode);
+    }
+    public LocalTime totaleTijd() {
+        var som = LocalTime.of(0, 0, 0);
+        for (var track : this.getTracks()) {
+            var trackTijd = track.getTijd();
+            som = som.plusHours(trackTijd.getHour()).plusMinutes(trackTijd.getMinute())
+                    .plusSeconds(trackTijd.getSecond());
+        }
+        return som;
     }
 }
