@@ -2,12 +2,11 @@ package be.vdab.muziek.controllers;
 
 import be.vdab.muziek.dto.AlbumBeknoptMetArtiest;
 import be.vdab.muziek.dto.AlbumMetTracksEnTotaleTijd;
+import be.vdab.muziek.dto.GewijzigdeScore;
 import be.vdab.muziek.exceptions.AlbumNietGevondenException;
 import be.vdab.muziek.services.AlbumService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Stream;
 
@@ -36,5 +35,10 @@ class AlbumController {
         return albumService.findByJaar(jaar)
                 .stream()
                 .map(AlbumBeknoptMetArtiest::new);
+    }
+    @PatchMapping("{id}/score")
+    void wijzigScore(@PathVariable long id,
+                     @RequestBody @Valid GewijzigdeScore gewijzigdeScore) {
+        albumService.wijzigScore(id, gewijzigdeScore.score());
     }
 }

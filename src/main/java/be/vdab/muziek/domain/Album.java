@@ -1,5 +1,6 @@
 package be.vdab.muziek.domain;
 
+import be.vdab.muziek.exceptions.OngeldigeScoreException;
 import jakarta.persistence.*;
 
 import java.time.LocalTime;
@@ -79,5 +80,11 @@ public class Album {
                     .plusSeconds(trackTijd.getSecond());
         }
         return som;
+    }
+    public void setScore(int score) {
+        if (!(score >= 0 && score <= 10)) {
+            throw new OngeldigeScoreException();
+        }
+        this.score = score;
     }
 }
