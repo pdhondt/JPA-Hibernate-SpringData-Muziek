@@ -20,10 +20,10 @@ public class Album {
         joinColumns = @JoinColumn(name = "albumId"))
     @OrderBy("naam")
     private Set<Track> tracks;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "artiestId")
     private Artiest artiest;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "labelId")
     private Label label;
 
